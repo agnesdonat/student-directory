@@ -25,7 +25,7 @@ end
 def print(students) 
     
     students.each do |student|
-      if student[:name][0] == "a"
+      if student[:name].length < 12
         puts "#{student[:name]} #{student[:cohort]}"
       end
     end
