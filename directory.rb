@@ -12,7 +12,7 @@ def input_students
     # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november, hobby: info[:hobby], country: info[:country], height: info[:height]}
+    students << {name: name, cohort: info[:cohort], hobby: info[:hobby], country: info[:country], height: info[:height]}
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
@@ -25,13 +25,26 @@ def input_students
 end
 
 def more_info
+  months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+  puts "Please enter the cohort"
+  cohort = gets.chomp
+
+  # cohort = months[1] if cohort.empty?
+  
+  until months.include? cohort do
+    puts "Enter valid month or leave empty again"
+    cohort = gets.chomp
+    cohort = months[1] if cohort.empty?
+  end 
+  
+      
   puts "Please enter a hobby"
   hobby = gets.chomp
   puts "Please enter their country of origin"
   country= gets.chomp
   puts "Please enter their height"
   height = gets.chomp.to_i
-  return {hobby: hobby, country: country, height: height}
+  return {cohort: cohort.to_sym, hobby: hobby, country: country, height: height}
 end  
 
 def print_header
