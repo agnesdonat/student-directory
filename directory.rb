@@ -4,7 +4,7 @@ def input_students
     # create an empty array
   students = []
     # get the first name
-  name = gets.chomp
+  name = gets.strip
     # store information in variable "info" from more_info method
   if !name.empty? 
       info = more_info
@@ -19,7 +19,7 @@ def input_students
       puts "Now we have #{students.count} students."
     end  
     # get another name from the user
-    name = gets.chomp
+    name = gets.strip
     if !name.empty? 
       info = more_info
     end  
@@ -31,20 +31,20 @@ end
 def more_info
   months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
   puts "Please enter the cohort"
-  cohort = gets.chomp
+  cohort = gets.strip
   
   until months.include? cohort do
     puts "Enter valid month or leave empty again"
-    cohort = gets.chomp
+    cohort = gets.strip
     cohort = months[1] if cohort.empty?
   end
       
   puts "Please enter a hobby"
-  hobby = gets.chomp
+  hobby = gets.chop
   puts "Please enter their country of origin"
-  country= gets.chomp
+  country= gets.chop
   puts "Please enter their height"
-  height = gets.chomp.to_i
+  height = gets.chop.to_i
   return {cohort: cohort, hobby: hobby, country: country, height: height}
 end  
 
@@ -57,7 +57,7 @@ def print(students)
   i = 0
   
   while students.length > i do
-  puts "name: #{students[i][:name]}".center(120)
+  puts "name: #{students[i][:name]}, cohort: #{students[i][:cohort]}, hobby: #{students[i][:hobby]}, country: #{students[i][:country]}, height: #{students[i][:height]} cm".center(120)
   i += 1
   end
 end
