@@ -13,7 +13,11 @@ def input_students
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: info[:cohort], hobby: info[:hobby], country: info[:country], height: info[:height]}
-    puts "Now we have #{students.count} students"
+    if students.length == 1
+      puts "Now we have 1 student."
+    else
+      puts "Now we have #{students.count} students."
+    end  
     # get another name from the user
     name = gets.chomp
     if !name.empty? 
@@ -45,29 +49,32 @@ def more_info
 end  
 
 def print_header
- puts "The students at Makers Academy
+ puts "The students of my cohort at Makers Academy
   -------------".lines.map {|line| line.strip.center(120) }
 end
 
-def print(students) 
-  puts "Please enter a month to see students of that cohort" 
-  user_input_month = gets.chomp
+def print(students)
+  i = 0
   
-  students.map do |student|
-   if user_input_month == student[:cohort]
-     puts student[:name].center(120)
-   else
-     puts "We have no students enrolled on the #{user_input_month} cohort.".center(120)   
-   end
+  while students.length > i do
+  puts "name: #{students[i][:name]}".center(120)
+  i += 1
   end
 end
 
-def print_footer(names) 
+def print_footer(students)
   
-  puts "\n Overall, we have #{names.count} great students".lines.map {|line| line.strip.center(120)}
+  if students.length == 0
+    puts "\n We have no students enrolled at the moment.".lines.map {|line| line.strip.center(120)}
+  elsif students.length == 1
+    puts "\n Overall, we have 1 great student.".lines.map {|line| line.strip.center(120)}
+  else
+    puts "\n Overall, we have #{students.count} great students.".lines.map {|line| line.strip.center(120)}
+  end
+  
 end  
 
 students = input_students
 print_header
 print(students)
-# print_footer(students)
+print_footer(students)
