@@ -78,8 +78,10 @@ def print_footer
 end
 
 def save_students
+  puts "Where do you want to save the new studnet's name?"
+  file_to_save = gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(file_to_save, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -90,7 +92,9 @@ def save_students
 end
 
 def load_students
-  file = File.open("students.csv", "r")
+  puts "Which file do you want to load?"
+  file_to_load = gets.chomp
+  file = File.open(file_to_load, "r")
   file.readlines.each do |line|
     name, @cohort = line.chomp.split(',')
     adding_students(name)
@@ -102,7 +106,7 @@ def try_load_students
   filename = ARGV.first # first argument from the command line
   return if filename.nil? # get out of the method if it isn't given
   if File.exists?(filename) # if it exists
-    load_students(filename)
+    load_students(file_to_load)
       puts "Loaded #{@students.count} from #{filename}"
   else # if it does not exist
     puts "Sorry, #{filename} does not exist."
