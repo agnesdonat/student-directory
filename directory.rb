@@ -1,5 +1,5 @@
 @students = [] # an empty array accessible to all methods
-
+@cohort = :november
 def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
@@ -35,48 +35,23 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  name = STDIN.gets.strip
-    # store information in variable "info" from more_info method
-  if !name.empty? 
-      info = more_info
-  end
+  name = STDIN.gets.chomp
     # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: info[:cohort]} # hobby: info[:hobby], country: info[:country], height: info[:height]}
+    adding_students(name) 
     if @students.length == 1
       puts "Now we have 1 student."
     else
       puts "Now we have #{@students.count} students."
     end  
     # get another name from the user
-    name = STDIN.gets.strip
-    if !name.empty? 
-      info = more_info
-    end  
+    name = STDIN.gets.chomp
   end
-    # return the array of students
-    # @students
 end
 
-def more_info
-  months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-  puts "Please enter the cohort"
-  cohort = gets.strip
-  
-  until months.include? cohort do
-    puts "Enter valid month or leave empty again"
-    cohort = STDIN.gets.strip
-    cohort = months[1] if cohort.empty?
-  end
-      
-  puts "Please enter a hobby"
-  hobby = STDIN.gets.chomp
-  puts "Please enter their country of origin"
-  country= STDIN.gets.chomp
-  puts "Please enter their height"
-  height = STDIN.gets.chomp.to_i
-  return {cohort: cohort, hobby: hobby, country: country, height: height}
+def adding_students(name)
+  @students << {name: name, cohort: :november}
 end
 
 def show_students
@@ -91,10 +66,8 @@ def print_header
 end
 
 def print_student_list
-  i = 0
-  while @students.length > i do
-  puts "name: #{@students[i][:name]}, cohort: #{@students[i][:cohort]}".center(120) # hobby: #{@students[i][:hobby]}, country: #{@students[i][:country]}, height: #{@students[i][:height]} cm"
-  i += 1
+  @students.each do |student|
+  puts "name: #{student[:name]}, #{student[:cohort]} cohort".center(120) 
   end
 end
 
@@ -123,8 +96,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    name, @cohort = line.chomp.split(',')
+    adding_students(name)
   end
   file.close
 end
@@ -143,7 +116,3 @@ end
 
 try_load_students
 interactive_menu 
-# @students = input_students
-# print_header
-# print(students)
-# print_footer(students)
