@@ -81,25 +81,27 @@ def save_students
   puts "Where do you want to save the new studnet's name?"
   file_to_save = gets.chomp
   # open the file for writing
-  file = File.open(file_to_save, "w")
+  File.open(file_to_save, "w") do |f|
   # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      f.puts csv_line
+    end  
   end
-  file.close
+  # file.close
 end
 
 def load_students
   puts "Which file do you want to load?"
   file_to_load = gets.chomp
-  file = File.open(file_to_load, "r")
-  file.readlines.each do |line|
-    name, @cohort = line.chomp.split(',')
-    adding_students(name)
-  end
-  file.close
+  File.open(file_to_load, "r") do |f|
+    f.readlines.each do |line|
+      name, @cohort = line.chomp.split(',')
+      adding_students(name)
+    end
+  end  
+  # file.close
 end
 
 def try_load_students
