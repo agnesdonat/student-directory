@@ -5,7 +5,7 @@ def print_menu
     puts "2. Show the students"
     puts "3. Save the list to students.csv"
     puts "4. Load the list from students.csv"
-    puts "9. Exit" # 9 because we'll be adding more items
+    puts "9. Exit" 
 end
 
 def interactive_menu
@@ -17,18 +17,12 @@ end
 
 def process(selection)
   case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you meant, try again."
+    when "1" then input_students
+    when "2" then show_students
+    when "3" then save_students
+    when "4" then load_students
+    when "9" then exit
+    else puts "I don't know what you meant, try again."
   end  
 end
 
@@ -40,9 +34,9 @@ def input_students
   while !name.empty? do
     # add the student hash to the array
     adding_students(name) 
-    if @students.length == 1
+    if @students.length == 1 
       puts "Now we have 1 student."
-    else
+    else 
       puts "Now we have #{@students.count} students."
     end  
     # get another name from the user
@@ -72,12 +66,11 @@ def print_student_list
 end
 
 def print_footer
-  if @students.length == 0
-    puts "\n We have no students enrolled at the moment.".lines.map {|line| line.strip.center(120)}
-  elsif @students.length == 1
-    puts "\n Overall, we have 1 great student.".lines.map {|line| line.strip.center(120)}
-  else
-    puts "\n Overall, we have #{@students.count} great students.".lines.map {|line| line.strip.center(120)}
+  students_length = @students.length
+  case students_length
+  when 0 then puts "\n We have no students enrolled at the moment.".lines.map {|line| line.strip.center(120)}
+  when 1 then puts "\n Overall, we have 1 great student.".lines.map {|line| line.strip.center(120)}
+  else puts "\n Overall, we have #{@students.count} great students.".lines.map {|line| line.strip.center(120)}
   end
 end
 
